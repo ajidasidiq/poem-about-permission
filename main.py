@@ -15,6 +15,10 @@ to be a door."""
 
 
 def main() -> None:
+    # The gate rejects anything outside 1-280 code points or whitespace-only,
+    # so validate before writing instead of silently emitting an invalid entry.
+    if not 1 <= len(POEM) <= 280 or not POEM.strip():
+        raise SystemExit(f"entry text invalid: {len(POEM)} code points")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(POEM)
